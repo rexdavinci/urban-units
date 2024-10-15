@@ -6,6 +6,7 @@ using fractionalized.Data;
 using fractionalized.Mappings;
 using fractionalized.DTOs.Building;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace fractionalized.Controllers
 {
@@ -16,16 +17,17 @@ namespace fractionalized.Controllers
         private readonly ApplicationDBContext _context = context;
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            var buildings = _context.Buildings.ToList().Select(s => s.ToBuildingDTO());
+            var buildings = await _context.Buildings.ToListAsync();
+            var buildingDTO = buildings.Select(s => s.ToBuildingDTO());
             return Ok(buildings);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetBuilding([FromRoute] int id)
+        public async Task<IActionResult> GetBuilding([FromRoute] int id)
         {
-            var building = _context.Buildings.Find(id);
+            var building = await _context.Buildings.FindAsync(id);
             if (building == null)
             {
                 return NotFound();
@@ -34,19 +36,19 @@ namespace fractionalized.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] NewBuildingDTO createBuildingDTO)
+        public async Task<IActionResult> Create([FromBody] NewBuildingDTO createBuildingDTO)
         {
             var buildingModel = createBuildingDTO.ToBuildingFromNewBuildingDTO();
-            _context.Buildings.Add(buildingModel);
-            _context.SaveChanges();
+            await _context.Buildings.AddAsync(buildingModel);
+            await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetBuilding), new { id = buildingModel.Id }, buildingModel.ToBuildingDTO());
         }
 
         [HttpPut]
         [Route("{id}")]
-        public IActionResult Update([FromRoute] int id, [FromBody] UpdateBuildingDTO updateBuildingDTO)
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateBuildingDTO updateBuildingDTO)
         {
-            var building = _context.Buildings.FirstOrDefault(x => x.Id == id);
+            var building = await _context.Buildings.FirstOrDefaultAsync(x => x.Id == id);
 
             if (building == null)
             {
@@ -60,21 +62,21 @@ namespace fractionalized.Controllers
             building.DocumentsURL = updateBuildingDTO.DocumentsURL;
             building.SoldUnits = updateBuildingDTO.SoldUnits;
             building.AvailableUnits = updateBuildingDTO.AvailableUnits;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync ();
             return Ok(building.ToBuildingDTO());
         }
 
         [HttpDelete]
         [Route("{id}")]
-        public IActionResult Delete([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var building = _context.Buildings.FirstOrDefault(b => b.Id == id);
+            var building = await _context.Buildings.FirstOrDefaultAsync(b => b.Id == id);
             if (building == null)
             {
                 return NotFound();
             }
             _context.Buildings.Remove(building);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return NoContent();
 
         }
