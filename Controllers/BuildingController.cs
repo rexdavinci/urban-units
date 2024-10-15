@@ -41,5 +41,42 @@ namespace fractionalized.Controllers
             _context.SaveChanges();
             return CreatedAtAction(nameof(GetBuilding), new { id = buildingModel.Id }, buildingModel.ToBuildingDTO());
         }
+
+        [HttpPut]
+        [Route("{id}")]
+        public IActionResult Update([FromRoute] int id, [FromBody] UpdateBuildingDTO updateBuildingDTO)
+        {
+            var building = _context.Buildings.FirstOrDefault(x => x.Id == id);
+
+            if (building == null)
+            {
+                return NotFound();
+            }
+            building.SoldUnits = updateBuildingDTO.SoldUnits;
+            building.Address = updateBuildingDTO.Address;
+            building.BuildingType = updateBuildingDTO.BuildingType;
+            building.Description = updateBuildingDTO.Description;
+            building.CurrentValuation = updateBuildingDTO.CurrentValuation;
+            building.DocumentsURL = updateBuildingDTO.DocumentsURL;
+            building.SoldUnits = updateBuildingDTO.SoldUnits;
+            building.AvailableUnits = updateBuildingDTO.AvailableUnits;
+            _context.SaveChanges();
+            return Ok(building.ToBuildingDTO());
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public IActionResult Delete([FromRoute] int id)
+        {
+            var building = _context.Buildings.FirstOrDefault(b => b.Id == id);
+            if (building == null)
+            {
+                return NotFound();
+            }
+            _context.Buildings.Remove(building);
+            _context.SaveChanges();
+            return NoContent();
+
+        }
     }
 }
