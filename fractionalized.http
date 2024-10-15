@@ -1,0 +1,6 @@
+@fractionalized_HostAddress = http://localhost:5139
+
+GET {{fractionalized_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
