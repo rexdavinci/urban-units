@@ -7,19 +7,22 @@ using fractionalized.Mappings;
 using fractionalized.DTOs.Building;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using fractionalized.Interfaces;
 
 namespace fractionalized.Controllers
 {
     [Route("/api/building")]
     [ApiController]
-    public class BuildingController(ApplicationDBContext context) : ControllerBase
+    public class BuildingController(ApplicationDBContext context, IBuildingRepository buildingRepository) : ControllerBase
     {
         private readonly ApplicationDBContext _context = context;
+        private readonly IBuildingRepository _buildingRepo = buildingRepository;
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var buildings = await _context.Buildings.ToListAsync();
+            // var buildings = await _context.Buildings.ToListAsync();
+            var buildings = await _buildingRepo.GetBuildingsAsync();
             var buildingDTO = buildings.Select(s => s.ToBuildingDTO());
             return Ok(buildings);
         }
