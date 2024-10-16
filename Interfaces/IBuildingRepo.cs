@@ -8,7 +8,7 @@ using fractionalized.Models;
 
 namespace fractionalized.Interfaces
 {
-    public interface IBuildingRepository
+    public interface IBuildingRepo
     {
         Task<List<Building>> GetBuildingsAsync();
         Task<Building?> GetBuildingAsync(int id); // Might be null

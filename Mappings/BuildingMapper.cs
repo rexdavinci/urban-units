@@ -31,6 +31,7 @@ namespace fractionalized.Mappings
                 LastValuedAt = building.LastValuedAt,
                 CurrentValuation = building.CurrentValuation,
                 DocumentsURL = building.DocumentsURL,
+                BuildingUnits = building.BuildingUnits.Select(bu => bu.ToBuildingUnitDTO()).ToList(),
             };
         }
 

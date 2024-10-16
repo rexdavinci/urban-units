@@ -13,15 +13,14 @@ namespace fractionalized.Controllers
 {
     [Route("/api/building")]
     [ApiController]
-    public class BuildingController(ApplicationDBContext context, IBuildingRepository buildingRepository) : ControllerBase
+    public class BuildingController(IBuildingRepo buildingRepo) : ControllerBase
     {
-        private readonly ApplicationDBContext _context = context;
-        private readonly IBuildingRepository _buildingRepo = buildingRepository;
+        // private readonly ApplicationDBContext _context = context;
+        private readonly IBuildingRepo _buildingRepo = buildingRepo;
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            // var buildings = await _context.Buildings.ToListAsync();
             var buildings = await _buildingRepo.GetBuildingsAsync();
             var buildingDTO = buildings.Select(s => s.ToBuildingDTO());
             return Ok(buildings);

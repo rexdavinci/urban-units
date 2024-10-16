@@ -9,5 +9,6 @@ namespace fractionalized.Interfaces
     public interface IBuildingUnitRepo
     {
         Task<List<BuildingUnit>> GetBuildingUnitsAsync();
+        Task<BuildingUnit?> GetBuildingUnitAsync(int id);
     }
 }

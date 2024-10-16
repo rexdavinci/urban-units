@@ -12,9 +12,9 @@ namespace fractionalized.Controllers
 {
     [Route("api/units")]
     [ApiController]
-    public class BuildingUnitController(ApplicationDBContext context, IBuildingUnitRepo buildingUnitRepo) : ControllerBase
+    public class BuildingUnitController(IBuildingUnitRepo buildingUnitRepo) : ControllerBase
     {
-        private readonly ApplicationDBContext _context = context;
+        // private readonly ApplicationDBContext _context = context;
         private readonly IBuildingUnitRepo _buildingUnitRepo = buildingUnitRepo;
 
 
@@ -24,6 +24,17 @@ namespace fractionalized.Controllers
             var buildingUnits = await _buildingUnitRepo.GetBuildingUnitsAsync();
             var buildingUnitsDTO = buildingUnits.Select(bu => bu.ToBuildingUnitDTO());
             return Ok(buildingUnitsDTO);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetBuildingUnit([FromRoute] int id)
+        {
+            var buildingUnit = await _buildingUnitRepo.GetBuildingUnitAsync(id);
+            if (buildingUnit == null)
+            {
+                return NotFound();
+            }
+            return Ok(buildingUnit.ToBuildingUnitDTO());
         }
     }
 }

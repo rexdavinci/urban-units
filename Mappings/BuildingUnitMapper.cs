@@ -19,7 +19,6 @@ namespace fractionalized.Mappings
                 CreatedAt = buildingModel.CreatedAt,
                 BuildingId = buildingModel.BuildingId,
                 SubscriberId = buildingModel.SubscriberId,
-                
             };
         }
     }

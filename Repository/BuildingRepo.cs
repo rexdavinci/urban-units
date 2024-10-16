@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace fractionalized.Repository
 {
-    public class BuildingRepository(ApplicationDBContext context) : IBuildingRepository
+    public class BuildingRepo(ApplicationDBContext context) : IBuildingRepo
     {
         private readonly ApplicationDBContext _context = context;
 
@@ -37,21 +37,22 @@ namespace fractionalized.Repository
         public async Task<Building?> GetBuildingAsync(int id)
         {
             // throw new NotImplementedException();
-            var building = await _context.Buildings.FindAsync(id);
+            // var building = await _context.Buildings.FindAsync(id); // Include won't work with this
+            var building = await _context.Buildings.Include(b => b.BuildingUnits).FirstOrDefaultAsync(b => b.Id == id);
             return building;
         }
 
         public Task<List<Building>> GetBuildingsAsync()
         {
             // throw new NotImplementedException();
-            return _context.Buildings.ToListAsync();
+            return _context.Buildings.Include(b => b.BuildingUnits).ToListAsync();
         }
 
         public async Task<Building?> UpdateAsync(int id, UpdateBuildingDTO updateBuildingDTO)
         {
             // throw new NotImplementedException();
             var prevBuilding = await _context.Buildings.FirstOrDefaultAsync(b => b.Id == id);
-            if(prevBuilding == null) 
+            if (prevBuilding == null)
             {
                 return null;
             }
@@ -69,5 +70,4 @@ namespace fractionalized.Repository
 
         }
     }
-
 }

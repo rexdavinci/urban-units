@@ -13,6 +13,11 @@ namespace fractionalized.Repository
     {
         private readonly ApplicationDBContext _context = context;
 
+        public async Task<BuildingUnit?> GetBuildingUnitAsync(int id)
+        {
+            return await _context.BuildingUnits.FindAsync(id);
+        }
+
         public async Task<List<BuildingUnit>> GetBuildingUnitsAsync()
         {
            return await _context.BuildingUnits.ToListAsync();

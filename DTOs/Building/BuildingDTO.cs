@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using fractionalized.DTOs.BuildingUnit;
 
 namespace fractionalized.DTOs.Building
 {
@@ -37,5 +38,7 @@ namespace fractionalized.DTOs.Building
 
         public int MinimumPurchaseUnits { get; set; } = 0;
         public int MaximumPurchaseUnits { get; set; } = 0;
+
+        public List<BuildingUnitDTO> BuildingUnits { get; set; } = [];
     }
 }
