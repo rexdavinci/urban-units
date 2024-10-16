@@ -2,23 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace fractionalized.Models
+namespace fractionalized.DTOs.BuildingUnit
 {
-    public class BuildingUnit
+    public class BuildingUnitDTO
     {
         public int Id { get; set; }
-
         public int? SubscriberId { get; set; }
         public int? BuildingId { get; set; }
 
-        public Building? Building { get; set; }
-        public Subscriber? Subscriber { get; set; }
+        // public Building? building { get; set; }
+        // public Subscriber? subscriber { get; set; } // No NAVIGATION PROPERTY
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
-        [Column(TypeName = "decimal(18,2)")]
         public decimal DividendsEarned { get; set; }
     }
 }

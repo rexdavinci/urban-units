@@ -7,7 +7,7 @@ namespace fractionalized.DTOs.Building
 {
     public class UpdateBuildingDTO
     {
-         public required string Title { get; set; }
+        public required string Title { get; set; }
 
         public string Description { get; set; }
         public string BuildingType { get; set; }
