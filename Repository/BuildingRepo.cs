@@ -14,6 +14,11 @@ namespace fractionalized.Repository
     {
         private readonly ApplicationDBContext _context = context;
 
+        public async Task<bool> BuildingExists(int id)
+        {
+            return await _context.Buildings.AnyAsync(b => b.Id == id);
+        }
+
         public async Task<Building> CreateAsync(Building buildingModel)
         {
             await _context.Buildings.AddAsync(buildingModel);
@@ -67,6 +72,21 @@ namespace fractionalized.Repository
 
             await _context.SaveChangesAsync();
             return prevBuilding;
+
+        }
+        public async Task<Building?> SellAsync(int id, int availableUnits, int soldUnits)
+        {
+            // throw new NotImplementedException();
+            var building = await _context.Buildings.FirstOrDefaultAsync(b => b.Id == id);
+            if (building == null)
+            {
+                return null;
+            }
+            building.SoldUnits = soldUnits;
+            building.AvailableUnits = availableUnits;
+
+            await _context.SaveChangesAsync();
+            return building;
 
         }
     }

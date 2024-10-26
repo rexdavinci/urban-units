@@ -13,8 +13,8 @@ namespace fractionalized.DTOs.Building
         public required string BuildingType { get; set; }
         public required string Status { get; set; }
 
-        public DateTime? ExitDate { get; set; }
-        public DateTime? CreatedAt { get; set; } = DateTime.Now;
+        public DateTime ExitDate { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         public required string Address { get; set; }
         public required string DocumentsURL { get; set; }

@@ -21,6 +21,17 @@ namespace fractionalized.Mappings
                 SubscriberId = buildingModel.SubscriberId,
             };
         }
+
+        public static BuildingUnit ToBuildingUnitFromCreateDTO(this NewBuildingUnitDTO buildingUnitDTO) 
+        {
+            return new BuildingUnit
+            {
+                DividendsEarned = buildingUnitDTO.DividendsEarned,
+                SubscriberId = buildingUnitDTO.SubscriberId,
+            };
+        }
+
+        
     }
 }
 

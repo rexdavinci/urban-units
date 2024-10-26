@@ -56,5 +56,14 @@ namespace fractionalized.Mappings
                 DocumentsURL = buildingDTO.DocumentsURL,
             };
         }
+
+        public static SellBuildingDTO ToSellBuildingDTO(this Building sellDTO)
+        {
+            return new SellBuildingDTO
+            {
+                SoldUnits = sellDTO.SoldUnits,
+                AvailableUnits = sellDTO.AvailableUnits,
+            };
+        }
     }
 }

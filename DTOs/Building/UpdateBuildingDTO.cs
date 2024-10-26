@@ -14,7 +14,6 @@ namespace fractionalized.DTOs.Building
         public string Status { get; set; }
 
         public DateTime ExitDate { get; set; }
-        public DateTime? CreatedAt { get; set; } = DateTime.Now;
 
         public string Address { get; set; }
         public string DocumentsURL { get; set; }

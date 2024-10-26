@@ -10,7 +10,7 @@ namespace fractionalized.Mappings
     public static class SubscriberMapper
     {
 
-        public static Subscriber ToNewSignupDTO(this RegisterDTO signupDTO)
+        public static Subscriber ToRegisterDTO(this RegisterDTO signupDTO)
         {
             return new Subscriber
             {

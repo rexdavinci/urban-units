@@ -11,6 +11,8 @@ namespace fractionalized.DTOs.BuildingUnit
         public int? SubscriberId { get; set; }
         public int? BuildingId { get; set; }
 
+        public int Units { get; set; } = 0;
+
         // public Building? building { get; set; }
         // public Subscriber? subscriber { get; set; } // No NAVIGATION PROPERTY
 

@@ -14,6 +14,8 @@ namespace fractionalized.Interfaces
         Task<Building?> GetBuildingAsync(int id); // Might be null
         Task<Building> CreateAsync(Building buildingModel);
         Task<Building?> UpdateAsync(int id, UpdateBuildingDTO buildingDTO);
+        Task<Building?> SellAsync(int id, int availableUnits, int soldUnits);
         Task<Building?> DeleteAsync(int id);
+        Task<bool> BuildingExists(int id);
     }
 }

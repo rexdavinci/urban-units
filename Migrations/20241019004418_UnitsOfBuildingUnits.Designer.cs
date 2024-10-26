@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using fractionalized.Data;
 
@@ -11,9 +12,11 @@ using fractionalized.Data;
 namespace fractionalized.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241019004418_UnitsOfBuildingUnits")]
+    partial class UnitsOfBuildingUnits
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,7 +95,7 @@ namespace fractionalized.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Buildings", (string)null);
+                    b.ToTable("Buildings");
                 });
 
             modelBuilder.Entity("fractionalized.Models.BuildingUnit", b =>
@@ -124,7 +127,7 @@ namespace fractionalized.Migrations
 
                     b.HasIndex("SubscriberId");
 
-                    b.ToTable("BuildingUnits", (string)null);
+                    b.ToTable("BuildingUnits");
                 });
 
             modelBuilder.Entity("fractionalized.Models.Subscriber", b =>
@@ -162,7 +165,7 @@ namespace fractionalized.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Subscribers", (string)null);
+                    b.ToTable("Subscribers");
                 });
 
             modelBuilder.Entity("fractionalized.Models.BuildingUnit", b =>

@@ -2,6 +2,7 @@ using fractionalized.Data;
 using fractionalized.Interfaces;
 using fractionalized.Repository;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson(options => {
+    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
