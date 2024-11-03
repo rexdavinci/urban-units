@@ -12,7 +12,7 @@ namespace fractionalized.DTOs.Subscriber
         public int Id { get; set; }
 
 
-        public string Username { get; set; }
+        // public string Username { get; set; }
         public List<BuildingUnitDTO> BuildingUnits { get; set; }
         public string Name { get; set; }
         public int Balance { get; set; }

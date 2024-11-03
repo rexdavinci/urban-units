@@ -2,14 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace fractionalized.Models
 {
-    public class Subscriber
+    public class Subscriber: IdentityUser
     {
-        public int Id { get; set; }
-        public string Password { get; set; } = "";
-        public string Username { get; set; } = "";
         public List<BuildingUnit> BuildingUnits { get; set; } = new List<BuildingUnit>();
         public string Name { get; set; } = "";
         public int Balance { get; set; }

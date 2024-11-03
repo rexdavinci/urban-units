@@ -9,7 +9,7 @@ namespace fractionalized.Interfaces
     public interface ISubscriberRepo
     {
         Task<Subscriber> CreateAsync(Subscriber subscriber);
-        Task<Subscriber?> SubscriberAsync(int id);
+        // Task<Subscriber?> SubscriberAsync(int id);
         Task<List<Subscriber>> GetSubscribersAsync();
     }
 }

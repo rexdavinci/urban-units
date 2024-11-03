@@ -23,15 +23,15 @@ namespace fractionalized.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetSubscriber([FromRoute] int id)
-        {
-            var subscriber = await _subscriberRepo.SubscriberAsync(id);
-            if(subscriber == null)
-            {
-                return NotFound();
-            }
-            return Ok(subscriber.ToSubscriberDTO());
-        }
+        // public async Task<IActionResult> GetSubscriber([FromRoute] int id)
+        // {
+        //     var subscriber = await _subscriberRepo.SubscriberAsync(id);
+        //     if(subscriber == null)
+        //     {
+        //         return NotFound();
+        //     }
+        //     return Ok(subscriber.ToSubscriberDTO());
+        // }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] RegisterDTO registerUserDTO)

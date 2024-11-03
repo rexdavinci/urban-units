@@ -14,9 +14,9 @@ namespace fractionalized.Mappings
         {
             return new Subscriber
             {
-                Password = signupDTO.Password,
+                // Password = signupDTO.Password,
                 Name = signupDTO.Name,
-                Username = signupDTO.Username,
+                // Username = signupDTO.Username,
                 CryptoAddress = signupDTO.CryptoAddress,
             };
         }
@@ -25,9 +25,9 @@ namespace fractionalized.Mappings
         {
             return new SubscriberDTO
             {
-                Id = subscriber.Id,
+                // Id = subscriber.Id,
                 Name = subscriber.Name,
-                Username = subscriber.Username,
+                // Username = subscriber.Username,
                 CryptoAddress = subscriber.CryptoAddress,
                 Balance = subscriber.Balance,
                 Spent = subscriber.Spent,
