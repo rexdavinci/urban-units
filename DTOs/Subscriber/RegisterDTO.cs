@@ -8,15 +8,26 @@ namespace fractionalized.DTOs.Subscriber
 {
     public class RegisterDTO
     {
-        public required string Password { get; set; }
         [Required]
         [MinLength(3, ErrorMessage = "Username cannot be shorter that 3")]
-        public required string Username { get; set; }
-        public required string Name { get; set; }
-        public int Balance { get; set; } = 0;
-        public int Spent { get; set; } = 0;
-        public string CryptoAddress { get; set; } = "";
+        public string? Password { get; set; }
 
-        public DateTime CreatedAt { get; set; }
+        [Required]
+        [MinLength(4, ErrorMessage = "Username Too Short")]
+        public string? UserName { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public string? Email { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        public string? Name { get; set; }
+
+        [Required]
+        [StringLength(10, ErrorMessage = "Invalid", MinimumLength = 6)]
+        public string? CryptoAddress { get; set; }
+
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
     }
 }

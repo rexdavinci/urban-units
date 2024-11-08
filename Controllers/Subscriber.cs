@@ -6,42 +6,75 @@ using fractionalized.Interfaces;
 using fractionalized.DTOs.Subscriber;
 using fractionalized.Mappings;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using fractionalized.Models;
+
+
+// [Route("api/subscribers")]
+// [ApiController]
+// public class Subscriber(UserManager<Subscriber> userManager) : ControllerBase
+// {
+//     private readonly UserManager<Subscriber> _userManager = userManager ;
+
+//     [HttpPost("register")]
+//     public async Task<IActionResult> Register([FromBody])
+
+// }
 
 namespace fractionalized.Controllers
 {
     [Route("api/subscribers")]
     [ApiController]
-    public class Subscriber(ISubscriberRepo subscriberRepo) : ControllerBase
+    public class SubscriberController(UserManager<Subscriber> userManager) : ControllerBase
     {
-        private readonly ISubscriberRepo _subscriberRepo = subscriberRepo;
+        private readonly UserManager<Subscriber> _userManager = userManager;
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            var subscribers = await _subscriberRepo.GetSubscribersAsync();
-            return Ok(subscribers);
-        }
-
-        [HttpGet("{id}")]
-        // public async Task<IActionResult> GetSubscriber([FromRoute] int id)
-        // {
-        //     var subscriber = await _subscriberRepo.SubscriberAsync(id);
-        //     if(subscriber == null)
-        //     {
-        //         return NotFound();
-        //     }
-        //     return Ok(subscriber.ToSubscriberDTO());
-        // }
-
-        [HttpPost]
+        [HttpPost("register")]
         public async Task<IActionResult> Create([FromBody] RegisterDTO registerUserDTO)
         {
-            if(!ModelState.IsValid)
+
+            try
+            {
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var newSubscriber = new Subscriber
+                {
+                    UserName = registerUserDTO.UserName,
+                    Name = registerUserDTO.Name,
+                    // Email = registerUserDTO.Email,
+                    CreatedAt = DateTime.Now,
+                };
+
+                var createdSubscriber = await _userManager.CreateAsync(newSubscriber, registerUserDTO.Password);
+
+                if (createdSubscriber.Succeeded)
+                {
+                    var roleResult = await _userManager.AddToRoleAsync(newSubscriber, "USER"); // make new user have `USER` role
+                    if (roleResult.Succeeded)
+                    {
+                        return Ok("Subscriber Registered");
+                    } 
+                    return StatusCode(500, roleResult.Errors);
+                }
+                return StatusCode(500, createdSubscriber.Errors);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e);
+            }
+
+
+
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             var subscriber = registerUserDTO.ToRegisterDTO();
-            await _subscriberRepo.CreateAsync(subscriber);
+            // await _subscriberRepo.CreateAsync(subscriber);
             return Ok(subscriber);
 
             // return CreatedAtAction(nameof(GetBuilding), new { id = subscriber.Id }, buildingModel.ToBuildingDTO());

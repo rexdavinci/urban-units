@@ -52,8 +52,8 @@ namespace fractionalized.Controllers
             return CreatedAtAction(nameof(GetBuildingUnit), new { id = buildingUnitModel.Id }, buildingUnitModel.ToBuildingUnitDTO());
         }
 
-        [HttpPut]
-        [Route("{id}")]
+        [HttpPut("{id:int}")]
+        // [Route("{id}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] BuildingUnitUpdateDTO buildingUnitUpdateDTO)
         {
             
