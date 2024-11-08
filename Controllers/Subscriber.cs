@@ -7,6 +7,7 @@ using fractionalized.DTOs.Subscriber;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using fractionalized.Models;
+using Microsoft.EntityFrameworkCore;
 
 
 // [Route("api/subscribers")]
@@ -24,10 +25,11 @@ namespace fractionalized.Controllers
 {
     [Route("api/subscribers")]
     [ApiController]
-    public class SubscriberController(UserManager<Subscriber> userManager, ITokenService tokenService) : ControllerBase
+    public class SubscriberController(UserManager<Subscriber> userManager, ITokenService tokenService, SignInManager<Subscriber> signInManager) : ControllerBase
     {
         private readonly UserManager<Subscriber> _userManager = userManager;
         private readonly ITokenService _tokenService = tokenService;
+        private readonly SignInManager<Subscriber> _signInManager = signInManager;
 
         [HttpPost("register")]
         public async Task<IActionResult> Create([FromBody] RegisterDTO registerUserDTO)
@@ -59,7 +61,7 @@ namespace fractionalized.Controllers
                         return Ok(new NewSubscriberDTO 
                         {
                             Email = newSubscriber.Email,
-                            UserName = newSubscriber.UserName,
+                            UserName = newSubscriber.UserName.ToLower(),
                             Token = _tokenService.CreateToken(newSubscriber),
                         });
                     } 
@@ -71,6 +73,29 @@ namespace fractionalized.Controllers
             {
                 return StatusCode(500, e);
             }
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(LoginDTO login)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var subscriber = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == login.UserName.ToLower());
+            if(subscriber == null) return Unauthorized("Invalid Username or Password");
+
+            var result = await _signInManager.CheckPasswordSignInAsync(subscriber, login.Password, false);
+
+            if (!result.Succeeded)
+                return Unauthorized("Unauthorized Access");
+
+            return Ok(new NewSubscriberDTO
+            {
+                UserName = subscriber.UserName,
+                Email = subscriber.Email,
+                Token = _tokenService.CreateToken(subscriber),
+            });
+
         }
 
     }
