@@ -2,6 +2,7 @@ using fractionalized.Data;
 using fractionalized.Interfaces;
 using fractionalized.Models;
 using fractionalized.Repository;
+using fractionalized.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +16,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddControllers();
-builder.Services.AddControllers().AddNewtonsoftJson(options => {
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+{
     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
 });
 builder.Services.AddEndpointsApiExplorer();
@@ -24,7 +26,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDBContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddIdentity<Subscriber, IdentityRole>(options => {
+builder.Services.AddIdentity<Subscriber, IdentityRole>(options =>
+{
     options.Password.RequireDigit = false;
     options.Password.RequireLowercase = false;
     options.Password.RequireUppercase = false;
@@ -33,14 +36,16 @@ builder.Services.AddIdentity<Subscriber, IdentityRole>(options => {
 }).AddEntityFrameworkStores<ApplicationDBContext>();
 
 
-builder.Services.AddAuthentication(options => {
-    options.DefaultAuthenticateScheme = 
-    options.DefaultChallengeScheme = 
-    options.DefaultForbidScheme = 
-    options.DefaultScheme = 
-    options.DefaultSignInScheme = 
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme =
+    options.DefaultChallengeScheme =
+    options.DefaultForbidScheme =
+    options.DefaultScheme =
+    options.DefaultSignInScheme =
     options.DefaultSignOutScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(options => {
+}).AddJwtBearer(options =>
+{
     options.TokenValidationParameters = new TokenValidationParameters
     {
 
@@ -56,6 +61,9 @@ builder.Services.AddAuthentication(options => {
 builder.Services.AddScoped<IBuildingRepo, BuildingRepo>();
 builder.Services.AddScoped<IBuildingUnitRepo, BuildingUnitRepo>();
 builder.Services.AddScoped<ISubscriberRepo, SubscriberRepo>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

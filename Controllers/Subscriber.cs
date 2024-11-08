@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using fractionalized.Interfaces;
 using fractionalized.DTOs.Subscriber;
-using fractionalized.Mappings;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using fractionalized.Models;
@@ -25,9 +24,10 @@ namespace fractionalized.Controllers
 {
     [Route("api/subscribers")]
     [ApiController]
-    public class SubscriberController(UserManager<Subscriber> userManager) : ControllerBase
+    public class SubscriberController(UserManager<Subscriber> userManager, ITokenService tokenService) : ControllerBase
     {
         private readonly UserManager<Subscriber> _userManager = userManager;
+        private readonly ITokenService _tokenService = tokenService;
 
         [HttpPost("register")]
         public async Task<IActionResult> Create([FromBody] RegisterDTO registerUserDTO)
@@ -45,7 +45,7 @@ namespace fractionalized.Controllers
                 {
                     UserName = registerUserDTO.UserName,
                     Name = registerUserDTO.Name,
-                    // Email = registerUserDTO.Email,
+                    Email = registerUserDTO.Email,
                     CreatedAt = DateTime.Now,
                 };
 
@@ -56,7 +56,12 @@ namespace fractionalized.Controllers
                     var roleResult = await _userManager.AddToRoleAsync(newSubscriber, "USER"); // make new user have `USER` role
                     if (roleResult.Succeeded)
                     {
-                        return Ok("Subscriber Registered");
+                        return Ok(new NewSubscriberDTO 
+                        {
+                            Email = newSubscriber.Email,
+                            UserName = newSubscriber.UserName,
+                            Token = _tokenService.CreateToken(newSubscriber),
+                        });
                     } 
                     return StatusCode(500, roleResult.Errors);
                 }
@@ -66,18 +71,6 @@ namespace fractionalized.Controllers
             {
                 return StatusCode(500, e);
             }
-
-
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            var subscriber = registerUserDTO.ToRegisterDTO();
-            // await _subscriberRepo.CreateAsync(subscriber);
-            return Ok(subscriber);
-
-            // return CreatedAtAction(nameof(GetBuilding), new { id = subscriber.Id }, buildingModel.ToBuildingDTO());
         }
 
     }
