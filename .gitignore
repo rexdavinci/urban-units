@@ -8,11 +8,15 @@
 *.userosscache
 *.sln.docstates
 
+bin/
+
 # User-specific files (Mono Auto Generated)
 mono_crash.*
 
 # Mono auto generated files
 mono_crash.*
+
+obj/
 
 # Build results
 [Dd]ebug/
