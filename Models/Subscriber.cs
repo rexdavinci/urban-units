@@ -10,6 +10,7 @@ namespace fractionalized.Models
     public class Subscriber: IdentityUser
     {
         public List<BuildingUnit> BuildingUnits { get; set; } = new List<BuildingUnit>();
+        public List<Portfolio> Portfolios { get; set; } = new List<Portfolio>();
         public string Name { get; set; } = "";
 
         public int Balance { get; set; }

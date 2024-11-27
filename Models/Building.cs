@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace fractionalized.Models
 {
+    [Table("Buildings")]
     public class Building
     {
         public int Id { get; set; }
@@ -44,5 +45,6 @@ namespace fractionalized.Models
         public string DocumentsURL { get; set; } = string.Empty;
 
         public List<BuildingUnit> BuildingUnits { get; set; } = new List<BuildingUnit>();
+        public List<BuildingGroup> BuildingGroups { get; set; } = new List<BuildingGroup>();
     }
 }
