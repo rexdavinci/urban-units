@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("fractionalized")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f6a97b5037161b251ea6c7c97e76d811fbb3e7f1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9a69af32074cad4c91b59a92e206f42fc0963591")]
 [assembly: System.Reflection.AssemblyProductAttribute("fractionalized")]
 [assembly: System.Reflection.AssemblyTitleAttribute("fractionalized")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
